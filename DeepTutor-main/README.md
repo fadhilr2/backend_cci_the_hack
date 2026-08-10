@@ -194,6 +194,7 @@ DeepTutor is an agent-native learning workspace that connects tutoring, problem 
 - **Multi-engine knowledge** — versioned RAG libraries across LlamaIndex, PageIndex, GraphRAG, LightRAG, or a linked Obsidian vault, with pluggable document parsing.
 - **Extensible tools and skills** — built-in tools, MCP servers, CLI apps, image / video / voice generation models, and installable community skills from EduHub.
 - **Inspectable memory** — L1 traces, L2 surface summaries, and L3 synthesis make personalization visible and editable, with a Memory Graph that traces every claim back to its evidence.
+- **Course Tracking & Adaptive STEM Roadmaps** — Stateless REST microservice APIs for video tracking, diagnostic MCQ/essay misconception grading, module capstones, and adaptive STEM learning roadmap generation.
 
 ---
 
