@@ -139,21 +139,31 @@ Source extras (.[ extra ], defined in pyproject.toml):
 
 ## Course System & Microservice REST APIs
 
-DeepTutor exposes stateless REST APIs for integration with external main backends:
+DeepTutor exposes stateless REST and WebSocket APIs for seamless integration with external main backends:
 
-1. **Course Tracking & Memory Pipeline**:
+1. **WebSocket Real-Time Socratic Chat**:
+   - `WS ws://127.0.0.1:8001/api/v1/ws`: Unified streaming WebSocket endpoint for interactive Socratic chat, tool calls, and turn events.
+
+2. **Model Catalog & Profile Settings**:
+   - `GET /api/v1/settings/catalog`: Fetches current LLM, Embedding, and Search model profile settings.
+   - `PUT /api/v1/settings/catalog`: Updates model profiles and active bindings (full JSON catalog document replacement).
+
+3. **Adaptive STEM Roadmap Generator**:
+   - `POST /api/v1/roadmap/generate`: Generates personalized STEM learning timelines (`6 to 10` steps) using the configured primary LLM model.
+
+4. **Course Tracking & Memory Pipeline**:
    - `POST /api/v1/courses/{course_id}/track_video`: Logs video watch events and knowledge concepts to L1 trace.
    - `POST /api/v1/courses/{course_id}/quiz/evaluate`: Evaluates MCQ & Essay responses, identifies distractor misconceptions, and emits to L1 trace.
    - `POST /api/v1/courses/{course_id}/modules/{module_id}/complete`: Consolidates learned concepts and misconception summaries into capstone L1 trace events.
 
-2. **Three-Layer Memory System (L1, L2, L3)**:
+5. **Knowledge Base (RAG) Subsystem**:
+   - `GET /api/v1/knowledge/list`: Lists all active Knowledge Bases.
+   - `POST /api/v1/knowledge/create`: Creates a new Knowledge Base repository.
+   - `POST /api/v1/knowledge/{kb_name}/documents/upload`: Uploads textbook documents (PDF, DOCX, TXT) into a Knowledge Base.
+   - `DELETE /api/v1/knowledge/{kb_name}`: Deletes a Knowledge Base.
+
+6. **Three-Layer Memory System (L1, L2, L3)**:
    - **L1**: Raw append-only trace log (`trace/<surface>/<date>.jsonl`).
    - **L2**: Per-surface summary documents (`L2/chat.md`, `L2/quiz.md`, `L2/kb.md`).
-   - **L3**: Cross-surface user profile documents (`L3/profile`, `L3/recent`, `L3/scope`, `L3/preferences`).
+   - **L3**: Cross-surface user profile slots (`L3/profile`, `L3/recent`, `L3/scope`, `L3/preferences`).
    - **REST Management**: `GET /api/v1/memory/doc/{layer}/{key}`, `POST /api/v1/memory/doc/{layer}/{key}/reset`.
-
-3. **Adaptive Roadmap Generator**:
-   - `POST /api/v1/roadmap/generate`: Generates personalized STEM learning timelines (`6 to 10` steps) using the configured primary LLM model.
-
-4. **Model Catalog Settings**:
-   - `GET /api/v1/settings/catalog`, `PUT /api/v1/settings/catalog`: Manages LLM, Embedding, and Search model profile configurations.
